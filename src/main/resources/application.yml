@@ -1,0 +1,29 @@
+spring:
+  main:
+    allow-circular-references: true
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: true
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/pupu
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      ssl: false
+      timeout: 5000
+  application:
+    name: recipe-api
+  web:
+    resources:
+      add-mappings: false
+logging:
+  level:
+    root: info
+server:
+  port: 40100
+
