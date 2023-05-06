@@ -1,0 +1,10 @@
+
+首先先在acl设置中，添加下面两个指令
+
+%% 只允许pupu-api发布
+{allow, {user, "pupu-api"}, publish, ["#"]}.
+
+%% 限制所有人发布
+{deny, all, publish, ["#"]}.
+
+然后添加认证方式，创建账户pupu-api，并设置密码

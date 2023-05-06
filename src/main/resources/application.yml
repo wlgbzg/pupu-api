@@ -27,3 +27,12 @@ logging:
 server:
   port: 40100
 
+# Mqtt配置
+mqtt:
+  serverURIs: tcp://localhost:1883
+  username: pupu-api
+  password: QWEqwe123
+  client:
+    id: ${random.value}
+  topic: channels/#
+
