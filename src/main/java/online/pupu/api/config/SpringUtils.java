@@ -1,4 +1,4 @@
-package utils;
+package online.pupu.api.config;
 
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;

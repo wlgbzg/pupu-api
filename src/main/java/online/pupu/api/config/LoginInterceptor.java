@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import utils.MessageUtils;
 import utils.jwt.JwtResult;
 import utils.jwt.JwtUtils;
 
@@ -21,16 +20,20 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String authorization = request.getHeader("authorization");
-        String id = request.getHeader("id");
-        if (!StringUtils.hasLength(authorization) || !StringUtils.hasLength(id)) {
-            throw new TokenNotAllowException(MessageUtils.message("not.authorized"));
-        }
-        JwtResult result = JwtUtils.verify(authorization.replace("Bearer ", ""));
-        if (!result.isOk() || !Objects.equals(id, result.getId())) {
+        if (verify(request)) {
             throw new TokenNotAllowException(MessageUtils.message("not.authorized"));
         }
         return true;
+    }
+
+    private boolean verify(HttpServletRequest request) {
+        String authorization = request.getHeader("authorization");
+        String id = request.getHeader("id");
+        if (!StringUtils.hasLength(authorization) || !StringUtils.hasLength(id)) {
+            return false;
+        }
+        JwtResult result = JwtUtils.verify(authorization);
+        return result.isOk() && Objects.equals(id, result.getId());
     }
 
     @Override

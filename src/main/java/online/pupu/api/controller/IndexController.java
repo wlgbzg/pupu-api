@@ -1,19 +1,14 @@
 package online.pupu.api.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import online.pupu.api.config.MqttGateway;
-import online.pupu.api.model.User;
-import online.pupu.api.service.UserService;
+import online.pupu.api.service.user.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import utils.Result;
-
-import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RestController

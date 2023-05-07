@@ -1,4 +1,4 @@
-package utils;
+package online.pupu.api.config;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
