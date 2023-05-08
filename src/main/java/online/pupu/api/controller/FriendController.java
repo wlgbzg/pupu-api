@@ -2,10 +2,7 @@ package online.pupu.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import utils.Result;
 
 /**
@@ -20,7 +17,7 @@ public class FriendController {
     /**
      * 创建一个行会
      */
-    @GetMapping("/")
+    @PostMapping("/")
     Result create() {
         return Result.success();
     }
@@ -28,7 +25,7 @@ public class FriendController {
     /**
      * 获取行会成员分页列表
      */
-    @GetMapping("/users/{guideId}")
+    @PostMapping("/users/{guideId}")
     Result messages(@PathVariable("guideId") String guideId, Integer offset, Integer limit) {
         return Result.success();
     }

@@ -22,7 +22,7 @@ public class ChannelController {
     /**
      * 获取频道历史消息
      */
-    @GetMapping("/{channelId}/messages")
+    @PostMapping("/{channelId}/messages")
     Result messages(@PathVariable("channelId") String channelId, Integer limit) {
         return Result.success();
     }
