@@ -3,6 +3,7 @@ package online.pupu.api.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import online.pupu.api.config.ApiFailedException;
+import online.pupu.api.config.MessageUtils;
 import online.pupu.api.model.User;
 import online.pupu.api.request.PasswordLogin;
 import online.pupu.api.request.PhoneVerification;
@@ -12,11 +13,14 @@ import online.pupu.api.service.phone.PhoneCodeService;
 import online.pupu.api.service.phone.PhoneCodeType;
 import online.pupu.api.service.user.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.web.bind.annotation.*;
-import online.pupu.api.config.MessageUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import utils.PhoneUtils;
 import utils.Result;
 import utils.jwt.JwtUtils;
+
 import java.util.Objects;
 
 /**

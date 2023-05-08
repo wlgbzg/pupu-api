@@ -9,21 +9,27 @@ import org.springframework.web.bind.annotation.RestController;
 import utils.Result;
 
 /**
- * 行会
+ * 好友
  */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/guides")
-public class GuidesController {
+@RequestMapping("api/v1/friend")
+public class FriendController {
 
     /**
      * 创建一个行会
-     * name/icon
      */
     @GetMapping("/")
-    Result messages(@PathVariable String channelId, Integer limit) {
+    Result create() {
         return Result.success();
     }
 
+    /**
+     * 获取行会成员分页列表
+     */
+    @GetMapping("/users/{guideId}")
+    Result messages(@PathVariable("guideId") String guideId, Integer offset, Integer limit) {
+        return Result.success();
+    }
 }

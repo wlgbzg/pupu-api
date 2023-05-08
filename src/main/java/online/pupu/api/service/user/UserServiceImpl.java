@@ -6,6 +6,8 @@ import online.pupu.api.model.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -24,6 +26,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User o) {
         return userDao.save(o);
+    }
+
+    @Override
+    public List<User> findByIdIn(List<String> idList) {
+        return userDao.findByIdIn(idList);
     }
 
     @Override
