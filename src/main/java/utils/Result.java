@@ -10,7 +10,7 @@ public class Result {
 
     public static Result success(Object object) {
         Result result = new Result();
-        result.setCode(0);
+        result.setCode(200);
         result.setMsg("ok");
         result.setData(object);
         return result;

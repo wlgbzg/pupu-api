@@ -28,6 +28,10 @@ public class PhoneCodeServiceImpl implements PhoneCodeService {
     @Override
     public boolean verify(PhoneCodeType type, String phone, String phonePrefix, String verifyCode) {
         String key = StringUtils.joinWith("_", prefix, type, phonePrefix, phone);
-        return Objects.equals(stringRedisTemplate.opsForValue().getAndDelete(key), verifyCode);
+        boolean verify = Objects.equals(stringRedisTemplate.opsForValue().get(key), verifyCode);
+        if (verify) {
+            stringRedisTemplate.delete(key);
+        }
+        return verify;
     }
 }

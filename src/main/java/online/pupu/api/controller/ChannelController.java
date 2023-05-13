@@ -3,10 +3,18 @@ package online.pupu.api.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import online.pupu.api.model.Channel;
+import online.pupu.api.model.ChannelGroup;
+import online.pupu.api.model.Guild;
 import online.pupu.api.request.ChannelCreate;
+import online.pupu.api.request.ChannelGroupCreate;
+import online.pupu.api.request.ChannelSetGroup;
 import online.pupu.api.service.channel.ChannelService;
 import org.springframework.web.bind.annotation.*;
 import utils.Result;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 频道
@@ -46,4 +54,40 @@ public class ChannelController {
         channel = channelService.saveChannel(channel);
         return Result.success(channel);
     }
+
+    /**
+     * 创建一个频道组
+     */
+    @PostMapping("/channelGroupCreate")
+    Result channelGroupCreate(@RequestHeader String id, @RequestBody ChannelGroupCreate r) {
+        String channelGroupId = channelService.generateChannelGroupId();
+        ChannelGroup channelGroup = new ChannelGroup();
+        channelGroup.setId(channelGroupId);
+        channelGroup.setName(r.getName());
+        channelGroup.setGuildId(r.getGuildId());
+        channelGroup = channelService.saveChannelGroup(channelGroup);
+        return Result.success(channelGroup);
+    }
+
+    /**
+     * 设置频道的频道组
+     */
+    @PostMapping("/setChannelGroup")
+    Result setChannelGroup(@RequestHeader String id, @RequestBody ChannelSetGroup r) {
+        Channel channel = channelService.findById(r.getChannelId());
+        channel.setChannelGroupId(r.getChannelGroupId());
+        channel = channelService.saveChannel(channel);
+        return Result.success(channel);
+    }
+
+    /**
+     * 获取当前行会的频道列表（包含组信息）
+     */
+    @PostMapping("/list/{guildId}")
+    Result list(@RequestHeader String id, @PathVariable("guildId") String guildId) {
+        List<Channel> channels = channelService.findChannelsByGuildId(guildId);
+        List<ChannelGroup> channelGroups = channelService.findChannelGroupsByGuildId(guildId);
+        return Result.success(Map.of("channels",channels, "channelGroups", channelGroups));
+    }
+
 }

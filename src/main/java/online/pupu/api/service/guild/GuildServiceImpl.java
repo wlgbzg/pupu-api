@@ -13,6 +13,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import utils.RandomStringUtilsV2;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class GuildServiceImpl implements GuildService {
@@ -44,13 +46,23 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
+    public List<Guild> findByIdIn(List<String> idList) {
+        return guildDao.findByIdIn(idList);
+    }
+
+    @Override
     public UserGuild saveUserGuild(UserGuild o) {
         return userGuildDao.save(o);
     }
 
     @Override
-    public Page<UserGuild> findUserGuildByGuildId(String guildId, Pageable pageable) {
+    public Page<UserGuild> findUserGuildsByGuildId(String guildId, Pageable pageable) {
         return userGuildDao.findByGuildId(guildId, pageable);
+    }
+
+    @Override
+    public List<UserGuild> findUserGuildsByUserId(String userId) {
+        return userGuildDao.findByUserId(userId);
     }
 
     @Override

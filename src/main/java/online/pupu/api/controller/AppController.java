@@ -3,7 +3,7 @@ package online.pupu.api.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import online.pupu.api.config.MessageUtils;
-import online.pupu.api.service.app.LoginConfig;
+import online.pupu.api.service.app.AppConfig;
 import org.springframework.web.bind.annotation.*;
 import utils.Result;
 
@@ -17,13 +17,14 @@ import utils.Result;
 public class AppController {
 
     /**
-     * 登录配置
+     * app配置
      */
-    @PostMapping("/config/login")
+    @PostMapping("/config")
     Result create() {
-        LoginConfig config = new LoginConfig();
-        config.setSubTitle(MessageUtils.message("app.config.login.sub.title"));
-        config.setTitle(MessageUtils.message("app.config.login.title"));
+        AppConfig config = new AppConfig();
+        config.setAppName(MessageUtils.message("app.config.appName"));
+        config.setWelcomeSubTitle(MessageUtils.message("app.config.welcome.sub.title"));
+        config.setWelcomeTitle(MessageUtils.message("app.config.welcome.title"));
         return Result.success(config);
     }
 

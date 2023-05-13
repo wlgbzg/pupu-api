@@ -7,6 +7,8 @@ import online.pupu.api.model.UserGuild;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 
 public interface GuildService {
     String generateId();
@@ -15,9 +17,13 @@ public interface GuildService {
 
     Guild findById(String id);
 
+    List<Guild> findByIdIn(List<String> idList);
+
     UserGuild saveUserGuild(UserGuild o);
 
-    Page<UserGuild> findUserGuildByGuildId(String guildId, Pageable pageable);
+    Page<UserGuild> findUserGuildsByGuildId(String guildId, Pageable pageable);
+
+    List<UserGuild> findUserGuildsByUserId(String userId);
 
     GuildRole saveGuildRoleDao(GuildRole o);
 

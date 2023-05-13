@@ -88,12 +88,27 @@ public class GuildController {
      */
     @PostMapping("/users/{guildId}")
     Result guildUsers(@PathVariable("guildId") String guildId, @RequestBody GuildUsers r) {
-        Page<UserGuild> userGuildByGuildId = guildService.findUserGuildByGuildId(guildId, PageRequest.of(r.getPageNum(), r.getPageSize(),
+        Page<UserGuild> userGuildByGuildId = guildService.findUserGuildsByGuildId(guildId, PageRequest.of(r.getPageNum(), r.getPageSize(),
                 Sort.by(Sort.Order.desc("role"), Sort.Order.desc("activeTime"))));
         List<String> idList = userGuildByGuildId.stream().map(UserGuild::getUserId).toList();
         Map<String, User> userMap = userService.findByIdIn(idList).stream().collect(Collectors.toMap(User::getId, user -> user));
         Map<String, UserGuild> userGuildMap = userGuildByGuildId.stream().collect(Collectors.toMap(UserGuild::getUserId, userGuild -> userGuild));
-        List<UserGuildDTO> list = idList.stream().map(id -> new UserGuildDTO(userGuildMap.get(id), userMap.get(id))).toList();
+        List<UserGuildDTO> list = idList.stream().map(id -> new UserGuildDTO(userGuildMap.get(id), userMap.get(id), null)).toList();
         return Result.success(list);
+    }
+
+    /**
+     * 获取我的行会完整列表
+     */
+    @PostMapping("/list")
+    Result list(@RequestHeader String id) {
+        List<UserGuild> userGuilds = guildService.findUserGuildsByUserId(id);
+        List<String> idList = userGuilds.stream().map(UserGuild::getGuildId).toList();
+        List<Guild> guilds = guildService.findByIdIn(idList);
+
+//        Map<String, Guild> guildMap = guilds.stream().collect(Collectors.toMap(Guild::getId, guild -> guild));
+//        Map<String, UserGuild> userGuildMap = userGuildList.stream().collect(Collectors.toMap(UserGuild::getGuildId, userGuild -> userGuild));
+//        List<UserGuildDTO> list = idList.stream().map(guildId -> new UserGuildDTO(userGuildMap.get(guildId), null, guildMap.get(guildId))).toList();
+        return Result.success(Map.of("userGuilds", userGuilds, "guilds", guilds));
     }
 }
