@@ -17,7 +17,7 @@ spring:
       ssl: false
       timeout: 5000
   application:
-    name: recipe-api
+    name: pupu-api
   web:
     resources:
       add-mappings: false

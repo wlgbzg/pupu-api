@@ -51,6 +51,7 @@ public class GuildController {
         guild.setCreateTime(System.currentTimeMillis());
         guild.setOwnerId(id);
         guild.setDefaultChannelId(channelId);
+        guild.setMemberCount(1L);
         guild = guildService.saveGuild(guild);
 
         // 保存: 行会角色分组
@@ -105,10 +106,23 @@ public class GuildController {
         List<UserGuild> userGuilds = guildService.findUserGuildsByUserId(id);
         List<String> idList = userGuilds.stream().map(UserGuild::getGuildId).toList();
         List<Guild> guilds = guildService.findByIdIn(idList);
-
-//        Map<String, Guild> guildMap = guilds.stream().collect(Collectors.toMap(Guild::getId, guild -> guild));
-//        Map<String, UserGuild> userGuildMap = userGuildList.stream().collect(Collectors.toMap(UserGuild::getGuildId, userGuild -> userGuild));
-//        List<UserGuildDTO> list = idList.stream().map(guildId -> new UserGuildDTO(userGuildMap.get(guildId), null, guildMap.get(guildId))).toList();
         return Result.success(Map.of("userGuilds", userGuilds, "guilds", guilds));
+    }
+
+    @PostMapping("/join/{guildId}")
+    Result join(@RequestHeader String id, @PathVariable("guildId") String guildId) {
+        // 保存: 用户-行会关系
+        UserGuild userGuild = new UserGuild();
+        userGuild.setCreateTime(System.currentTimeMillis());
+        userGuild.setUserId(id);
+        userGuild.setGuildId(guildId);
+        userGuild.setRole(0);
+        userGuild = guildService.saveUserGuild(userGuild);
+
+        // 更新人数
+        Guild guild = guildService.findById(guildId);
+        guild.setMemberCount(guild.getMemberCount() + 1);
+        guild = guildService.saveGuild(guild);
+        return Result.success(Map.of("guild", guild, "userGuild", userGuild));
     }
 }

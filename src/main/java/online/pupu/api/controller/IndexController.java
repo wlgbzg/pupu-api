@@ -5,10 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import online.pupu.api.config.MqttGateway;
 import online.pupu.api.service.user.UserService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import utils.Result;
+
+import java.util.Random;
 
 @Slf4j
 @RestController
@@ -20,10 +23,12 @@ public class IndexController {
 
     private final MqttGateway mqttGateway;
 
-    @GetMapping("/index")
-    Result index() {
 
-        mqttGateway.sendToMqtt("channels/01", "neirong1");
+
+    @GetMapping("/index")
+    Result index(String id) {
+
+        mqttGateway.sendToMqtt(id, id  + "=" + RandomStringUtils.randomAlphanumeric(5));
 
         return Result.success("3");
     }

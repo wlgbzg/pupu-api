@@ -28,5 +28,6 @@ public class Guild {
     private String intro; // 行会简介
     private String cover; // 行会封面图
     private String defaultChannelId; // 默认频道
+    private Long memberCount;
 
 }

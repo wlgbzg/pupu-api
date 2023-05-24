@@ -1,5 +1,7 @@
 package utils;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.Random;
 
 public class RandomStringUtilsV2 {
@@ -12,4 +14,13 @@ public class RandomStringUtilsV2 {
         return Long.toString(id);
     }
 
+    public static String randomMessageId() {
+        return RandomStringUtils.randomAlphanumeric(16);
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 100; i++) {
+            System.out.println(randomMessageId());
+        }
+    }
 }

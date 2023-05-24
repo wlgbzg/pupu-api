@@ -9,6 +9,7 @@ import online.pupu.api.request.ChannelCreate;
 import online.pupu.api.request.ChannelGroupCreate;
 import online.pupu.api.request.ChannelSetGroup;
 import online.pupu.api.service.channel.ChannelService;
+import online.pupu.api.service.guild.GuildService;
 import org.springframework.web.bind.annotation.*;
 import utils.Result;
 
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 public class ChannelController {
 
     private final ChannelService channelService;
+    private final GuildService guildService;
 
     /**
      * 获取频道历史消息
@@ -87,7 +89,8 @@ public class ChannelController {
     Result list(@RequestHeader String id, @PathVariable("guildId") String guildId) {
         List<Channel> channels = channelService.findChannelsByGuildId(guildId);
         List<ChannelGroup> channelGroups = channelService.findChannelGroupsByGuildId(guildId);
-        return Result.success(Map.of("channels",channels, "channelGroups", channelGroups));
+        Guild guild = guildService.findById(guildId);
+        return Result.success(Map.of("channels",channels, "channelGroups", channelGroups, "guild", guild));
     }
 
 }
