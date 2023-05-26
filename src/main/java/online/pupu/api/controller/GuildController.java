@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import online.pupu.api.config.MessageUtils;
 import online.pupu.api.model.*;
 import online.pupu.api.request.GuildCreate;
+import online.pupu.api.request.GuildSearch;
 import online.pupu.api.request.GuildUsers;
 import online.pupu.api.response.GuildCreateResponse;
 import online.pupu.api.response.UserGuildDTO;
@@ -14,6 +15,7 @@ import online.pupu.api.service.guild.GuildService;
 import online.pupu.api.service.user.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import utils.BeanUtilsV2;
@@ -107,6 +109,12 @@ public class GuildController {
         List<String> idList = userGuilds.stream().map(UserGuild::getGuildId).toList();
         List<Guild> guilds = guildService.findByIdIn(idList);
         return Result.success(Map.of("userGuilds", userGuilds, "guilds", guilds));
+    }
+
+    @PostMapping("/search")
+    Result search(@RequestHeader String id, @RequestBody GuildSearch r) {
+        Page<Guild> page = guildService.search(r.getKey(), PageRequest.of(r.getPageNum(), r.getPageSize()));
+        return Result.success(page);
     }
 
     @PostMapping("/join/{guildId}")

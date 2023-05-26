@@ -46,6 +46,11 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
+    public Page<Guild> search(String key, Pageable pageable) {
+        return guildDao.findByNameLike(key, pageable);
+    }
+
+    @Override
     public List<Guild> findByIdIn(List<String> idList) {
         return guildDao.findByIdIn(idList);
     }

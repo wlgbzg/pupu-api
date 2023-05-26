@@ -17,6 +17,8 @@ public interface GuildService {
 
     Guild findById(String id);
 
+    Page<Guild> search(String key, Pageable pageable);
+
     List<Guild> findByIdIn(List<String> idList);
 
     UserGuild saveUserGuild(UserGuild o);
