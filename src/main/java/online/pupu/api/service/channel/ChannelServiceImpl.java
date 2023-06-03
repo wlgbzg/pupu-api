@@ -37,6 +37,11 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
+    public void deleteChannel(String id) {
+        channelDao.deleteById(id);
+    }
+
+    @Override
     public List<Channel> findChannelsByGuildId(String guildId) {
         return channelDao.findByGuildId(guildId);
     }
@@ -58,6 +63,21 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public List<ChannelGroup> findChannelGroupsByGuildId(String guildId) {
         return channelGroupDao.findByGuildId(guildId);
+    }
+
+    @Override
+    public ChannelGroup findChannelGroupById(String id) {
+        return channelGroupDao.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteChannelGroupById(String id) {
+        channelGroupDao.deleteById(id);
+    }
+
+    @Override
+    public List<Channel> findChannelsByChannelGroupById(String channelGroupById) {
+        return channelDao.findByChannelGroupId(channelGroupById);
     }
 
 }

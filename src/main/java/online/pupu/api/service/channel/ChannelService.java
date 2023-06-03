@@ -13,6 +13,8 @@ public interface ChannelService {
 
     Channel findById(String id);
 
+    void deleteChannel(String id);
+
     List<Channel> findChannelsByGuildId(String guildId);
 
     String generateChannelGroupId();
@@ -20,5 +22,11 @@ public interface ChannelService {
     ChannelGroup saveChannelGroup(ChannelGroup o);
 
     List<ChannelGroup> findChannelGroupsByGuildId(String guildId);
+
+    ChannelGroup findChannelGroupById(String id);
+
+    void deleteChannelGroupById(String id);
+
+    List<Channel> findChannelsByChannelGroupById(String channelGroupById);
 
 }

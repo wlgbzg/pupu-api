@@ -99,6 +99,17 @@ public class GuildController {
     }
 
     /**
+     * 设置默认频道
+     */
+    @PostMapping("/setDefaultChannel/{guildId}/{channelId}")
+    Result setDefaultChannel(@RequestHeader String id, @PathVariable("guildId") String guildId, @PathVariable("channelId") String channelId) {
+        Guild guild = guildService.findById(guildId);
+        guild.setDefaultChannelId(channelId);
+        guild = guildService.saveGuild(guild);
+        return Result.success(guild);
+    }
+
+    /**
      * 获取我的行会完整列表
      */
     @PostMapping("/list")

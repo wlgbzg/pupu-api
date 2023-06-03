@@ -85,6 +85,31 @@ public class ChannelController {
     }
 
     /**
+     * 设置频道的频道组
+     */
+    @PostMapping("/deleteChannelGroup/{channelGroupId}")
+    Result deleteChannelGroup(@RequestHeader String id, @PathVariable("channelGroupId") String channelGroupId ) {
+        channelService.deleteChannelGroupById(channelGroupId);
+
+        List<Channel> channels = channelService.findChannelsByChannelGroupById(channelGroupId);
+        channels.forEach(channel -> {
+            channel.setChannelGroupId("");
+            channelService.saveChannel(channel);
+        });
+        return Result.success();
+    }
+
+
+    /**
+     * 删除频道
+     */
+    @PostMapping("/delete/{channelId}")
+    Result delete(@RequestHeader String id, @PathVariable("channelId") String channelId) {
+        channelService.deleteChannel(channelId);
+        return Result.success();
+    }
+
+    /**
      * 获取当前行会的频道列表（包含组信息）
      */
     @PostMapping("/list/{guildId}")

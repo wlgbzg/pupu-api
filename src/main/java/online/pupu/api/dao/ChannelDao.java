@@ -10,4 +10,5 @@ import java.util.List;
 public interface ChannelDao extends MongoRepository<Channel, String> {
 
     List<Channel> findByGuildId(String guildId);
+    List<Channel> findByChannelGroupId (String channelGroupId);
 }
