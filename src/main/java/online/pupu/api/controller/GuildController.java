@@ -7,7 +7,6 @@ import online.pupu.api.model.*;
 import online.pupu.api.request.GuildCreate;
 import online.pupu.api.request.GuildSearch;
 import online.pupu.api.request.GuildUsers;
-import online.pupu.api.response.GuildCreateResponse;
 import online.pupu.api.response.UserGuildDTO;
 import online.pupu.api.service.channel.ChannelService;
 import online.pupu.api.service.channel.ChannelType;
@@ -15,7 +14,6 @@ import online.pupu.api.service.guild.GuildService;
 import online.pupu.api.service.user.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import utils.BeanUtilsV2;
@@ -82,8 +80,8 @@ public class GuildController {
         channel.setReadonly(false);
         channel.setType(ChannelType.TEXT.getValue());
         channel.setIsPrivate(false);
-        channel = channelService.saveChannel(channel);
-        return Result.success(new GuildCreateResponse(guild, channel));
+        channelService.saveChannel(channel);
+        return Result.success(Map.of("guild", guild, "userGuild", userGuild));
     }
 
     /**

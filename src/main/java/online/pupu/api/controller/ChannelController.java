@@ -49,10 +49,12 @@ public class ChannelController {
         channel.setId(channelId);
         channel.setCreateTime(System.currentTimeMillis());
         channel.setGuildId(r.getGuildId());
+        channel.setIsPrivate(r.getIsPrivate());
         channel.setName(r.getName());
         channel.setReadonly(false);
         channel.setType(r.getType());
         channel.setIsPrivate(false);
+        channel.setChannelGroupId(r.getChannelGroupId());
         channel = channelService.saveChannel(channel);
         return Result.success(channel);
     }
