@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import online.pupu.api.model.Channel;
 import online.pupu.api.model.ChannelGroup;
 import online.pupu.api.model.Guild;
-import online.pupu.api.request.ChannelCreate;
-import online.pupu.api.request.ChannelGroupCreate;
-import online.pupu.api.request.ChannelGroupUpdate;
-import online.pupu.api.request.ChannelSetGroup;
+import online.pupu.api.request.*;
 import online.pupu.api.service.channel.ChannelService;
 import online.pupu.api.service.guild.GuildService;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +46,14 @@ public class ChannelController {
         return Result.success(channelGroup);
     }
 
+    @PostMapping("/updateChannel")
+    Result updateChannel(@RequestHeader String id, @RequestBody ChannelUpdate r) {
+        Channel channel = channelService.findById(r.getId());
+        channel.setName(r.getName());
+        channel.setIntro(r.getIntro());
+        channel = channelService.saveChannel(channel);
+        return Result.success(channel);
+    }
 
         /**
          * 创建一个频道
