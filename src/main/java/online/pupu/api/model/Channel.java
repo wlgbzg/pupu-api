@@ -21,6 +21,7 @@ public class Channel {
     private String id; // ID
     private Long createTime; // 创建时间
     private String guildId; // 行会id
+    private String intro; // 频道简介
 
     // 可修改
     private String name; // 名称

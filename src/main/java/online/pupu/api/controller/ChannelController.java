@@ -7,6 +7,7 @@ import online.pupu.api.model.ChannelGroup;
 import online.pupu.api.model.Guild;
 import online.pupu.api.request.ChannelCreate;
 import online.pupu.api.request.ChannelGroupCreate;
+import online.pupu.api.request.ChannelGroupUpdate;
 import online.pupu.api.request.ChannelSetGroup;
 import online.pupu.api.service.channel.ChannelService;
 import online.pupu.api.service.guild.GuildService;
@@ -37,10 +38,21 @@ public class ChannelController {
         return Result.success();
     }
 
-
     /**
-     * 创建一个频道
+     * 修改频道类别
      */
+    @PostMapping("/updateChannelGroup")
+    Result updateChannelGroup(@RequestHeader String id, @RequestBody ChannelGroupUpdate r) {
+        ChannelGroup channelGroup = channelService.findChannelGroupById(r.getId());
+        channelGroup.setName(r.getName());
+        channelGroup = channelService.saveChannelGroup(channelGroup);
+        return Result.success(channelGroup);
+    }
+
+
+        /**
+         * 创建一个频道
+         */
     @PostMapping("/create")
     Result create(@RequestHeader String id, @RequestBody ChannelCreate r) {
         String channelId = channelService.generateId();
