@@ -15,6 +15,8 @@ public interface GuildService {
 
     Guild saveGuild(Guild o);
 
+    void deleteGuild(String id);
+
     Guild findById(String id);
 
     Page<Guild> search(String key, Pageable pageable);

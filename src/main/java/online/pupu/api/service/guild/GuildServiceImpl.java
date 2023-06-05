@@ -41,6 +41,11 @@ public class GuildServiceImpl implements GuildService {
     }
 
     @Override
+    public void deleteGuild(String id) {
+        guildDao.deleteById(id);
+    }
+
+    @Override
     public Guild findById(String id) {
         return guildDao.findById(id).orElse(null);
     }

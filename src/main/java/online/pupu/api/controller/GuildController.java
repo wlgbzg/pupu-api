@@ -99,6 +99,15 @@ public class GuildController {
     }
 
     /**
+     * 删除频道
+     */
+    @PostMapping("/delete/{guildId}")
+    Result delete(@RequestHeader String id, @PathVariable("guildId") String guildId) {
+        guildService.deleteGuild(guildId);
+        return Result.success();
+    }
+
+    /**
      * 设置默认频道
      */
     @PostMapping("/setDefaultChannel/{guildId}/{channelId}")
