@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import online.pupu.api.config.MessageUtils;
 import online.pupu.api.model.*;
-import online.pupu.api.request.GuildCreate;
-import online.pupu.api.request.GuildSearch;
-import online.pupu.api.request.GuildUsers;
+import online.pupu.api.request.*;
 import online.pupu.api.response.UserGuildDTO;
 import online.pupu.api.service.channel.ChannelService;
 import online.pupu.api.service.channel.ChannelType;
@@ -99,12 +97,22 @@ public class GuildController {
     }
 
     /**
-     * 删除频道
+     * 删除社区
      */
     @PostMapping("/delete/{guildId}")
     Result delete(@RequestHeader String id, @PathVariable("guildId") String guildId) {
         guildService.deleteGuild(guildId);
         return Result.success();
+    }
+
+    @PostMapping("/updateGuild")
+    Result updateGuild(@RequestHeader String id, @RequestBody GuildUpdate r) {
+        Guild guild = guildService.findById(r.getId());
+        guild.setName(r.getName());
+        guild.setIntro(r.getIntro());
+        guild.setCover(r.getCover());
+        guild = guildService.saveGuild(guild);
+        return Result.success(guild);
     }
 
     /**
