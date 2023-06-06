@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import utils.RandomStringUtilsV2;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -78,6 +79,25 @@ public class GuildServiceImpl implements GuildService {
     @Override
     public GuildRole saveGuildRoleDao(GuildRole o) {
         return guildRoleDao.save(o);
+    }
+
+    @Override
+    public Integer generateGuildRoleId(String guildId) {
+        int id;
+        do {
+            id = new Random().nextInt(1000000, 10000000);
+        } while (guildRoleDao.existsById(guildId + "-" + id));
+        return id;
+    }
+
+    @Override
+    public List<GuildRole> guildRoleList(String guildId) {
+        return guildRoleDao.findByGuildId(guildId);
+    }
+
+    @Override
+    public GuildRole findGuildRoleById(String id) {
+        return guildRoleDao.findById(id).orElse(null);
     }
 
 

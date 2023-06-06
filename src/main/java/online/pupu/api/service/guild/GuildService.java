@@ -31,4 +31,10 @@ public interface GuildService {
 
     GuildRole saveGuildRoleDao(GuildRole o);
 
+    Integer generateGuildRoleId(String guildId);
+
+    List<GuildRole> guildRoleList(String guildId);
+
+    GuildRole findGuildRoleById(String id);
+
 }

@@ -54,6 +54,7 @@ public class GuildController {
 
         // 保存: 行会角色分组
         GuildRole guildRole = new GuildRole();
+        guildRole.setId(guildId + "_" + 0);
         guildRole.setGuildId(guildId);
         guildRole.setRole(0);
         guildRole.setPermissions(0L);
@@ -158,5 +159,32 @@ public class GuildController {
         guild.setMemberCount(guild.getMemberCount() + 1);
         guild = guildService.saveGuild(guild);
         return Result.success(Map.of("guild", guild, "userGuild", userGuild));
+    }
+
+
+    @PostMapping("/createGuildRole/{guildId}")
+    Result createGuildRole(@RequestHeader String id, @PathVariable("guildId") String guildId) {
+        int role = guildService.generateGuildRoleId(guildId);
+        GuildRole guildRole = new GuildRole();
+        guildRole.setGuildId(guildId);
+        guildRole.setRole(role);
+        guildRole.setPermissions(0L);
+        guildRole.setName("新角色");
+        guildRole.setSystem(true);
+        guildRole = guildService.saveGuildRoleDao(guildRole);
+        return Result.success(guildRole);
+    }
+
+    @PostMapping("/guildRoleList/{guildId}")
+    Result guildRoleList(@RequestHeader String id, @PathVariable("guildId") String guildId) {
+        return Result.success(guildService.guildRoleList(guildId));
+    }
+
+    @PostMapping("/updateGuildRole")
+    Result updateGuildRole(@RequestHeader String id, @RequestBody GuildRoleUpdate r) {
+        GuildRole guildRole = guildService.findGuildRoleById(r.getId());
+        guildRole.setName(r.getName());
+        guildRole = guildService.saveGuildRoleDao(guildRole);
+        return Result.success(guildRole);
     }
 }
