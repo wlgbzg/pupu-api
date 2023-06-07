@@ -184,6 +184,7 @@ public class GuildController {
     Result updateGuildRole(@RequestHeader String id, @RequestBody GuildRoleUpdate r) {
         GuildRole guildRole = guildService.findGuildRoleById(r.getId());
         guildRole.setName(r.getName());
+        guildRole.setPermissions(r.getPermissions());
         guildRole = guildService.saveGuildRoleDao(guildRole);
         return Result.success(guildRole);
     }

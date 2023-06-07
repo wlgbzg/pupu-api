@@ -6,4 +6,5 @@ import lombok.Data;
 public class GuildRoleUpdate {
     private String id; // 社区id
     private String name; //名字
+    private Long permissions; //权限
 }
