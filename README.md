@@ -13,6 +13,7 @@
 1. 服务端: java spring-boot + mongoDB
 2. 客户端: vue3 
 3. 长连接: emqx MQTT 频道订阅的方式
+4. 高性能推拉结合的即时通信，http拉，websocket推
 
 # 负载均衡
 1. 服务端代码无状态可以无限制扩容
